@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="row">
+    <form (submit)="search()">
+      <div class="col-12 d-flex align-items-center">
+        <label for="searchInput">Város keresése:</label>
+        <input
+          type="text"
+          id="searchInput"
+          name="searchInput"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          placeholder="Város keresése..."
+        />
+        <button class="btn btn-primary ms-3 px-3" [disabled]="!searchTerm">
+          Keresés
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- List of results -->
+  <div class="row pt-5">
+    <div class="col-12" *ngIf="searchResults">
+      <div class="card mt-3" *ngFor="let searchResult of searchResults">
+        <div class="card-header">{{ searchResult.name }} időjárása:</div>
+        <div class="card-body">
+          <p>
+            Hőmérséklet (Farenheit):
+            {{ kelvinToFahrenheit(searchResult.main.temp) }}
+          </p>
+          <p>
+            Hőmérséklet (Celsius):
+            {{ kelvinToCelsius(searchResult.main.temp) }}
+          </p>
+          <p>Légnyomás: {{ searchResult.main.pressure }}</p>
+          <p>Páratartalom: {{ searchResult.main.humidity }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
