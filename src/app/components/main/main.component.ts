@@ -48,6 +48,7 @@ export class MainComponent implements OnInit {
     this.weatherService.getWeather(this.searchTerm).subscribe({
       next: (data) => {
         if (this.notInList((data as any).name)) {
+          (data as any).currentDate = this.currentDate();
           this.searchResults.unshift(data);
           this.toastr.success(
             `${(data as any).name} város hozzáadva a listához`,
