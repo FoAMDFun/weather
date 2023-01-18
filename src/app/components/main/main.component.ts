@@ -45,7 +45,7 @@ export class MainComponent implements OnInit {
   }
 
   public search(): void {
-    this.weatherService.getWeather(this.searchTerm + ',hu').subscribe({
+    this.weatherService.getWeather(this.searchTerm).subscribe({
       next: (data) => {
         if (this.notInList((data as any).name)) {
           this.searchResults.unshift(data);
@@ -60,8 +60,8 @@ export class MainComponent implements OnInit {
         // error handling, we don't need parameter, assuming no city found
         () => {
           this.toastr.error(
-            'Hiba történt!',
-            'Nem található a keresési feltételnek megfelelő város!'
+            'Nem található a keresési feltételnek megfelelő város!',
+            'Hiba történt!'
           );
         },
     });
