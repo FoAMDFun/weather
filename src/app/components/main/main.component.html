@@ -17,22 +17,42 @@
       </div>
     </form>
   </div>
-  <!-- List of results -->
+</div>
+<!-- List of results -->
+<div class="container" *ngIf="searchResults">
   <div class="row pt-5">
-    <div class="col-12" *ngIf="searchResults">
-      <div class="card mt-3" *ngFor="let searchResult of searchResults">
-        <div class="card-header">{{ searchResult.name }} időjárása:</div>
+    <div
+      class="col-xl-3 col-md-6 col-sm-12"
+      *ngFor="let searchResult of searchResults"
+    >
+      <div class="card mt-3">
+        <div class="card-header">
+          {{ searchResult.name }} időjárása:
+          <p class="close-button" (click)="deleteCard(searchResult.name)">X</p>
+        </div>
         <div class="card-body">
-          <p>
-            Hőmérséklet (Farenheit):
-            {{ kelvinToFahrenheit(searchResult.main.temp) }}
+          <img
+            class="img-fluid"
+            src="{{
+              'http://openweathermap.org/img/wn/' +
+                searchResult.weather[0].icon +
+                '@2x.png'
+            }}"
+            alt="időjárás ikon"
+          />
+          <p class="temperature-celsius">
+            {{ kelvinToCelsius(searchResult.main.temp) }} <b>C</b>
           </p>
-          <p>
-            Hőmérséklet (Celsius):
-            {{ kelvinToCelsius(searchResult.main.temp) }}
+          <p class="temperature-fahrenheit">
+            {{ kelvinToFahrenheit(searchResult.main.temp) }} <b>F</b>
           </p>
-          <p>Légnyomás: {{ searchResult.main.pressure }}</p>
-          <p>Páratartalom: {{ searchResult.main.humidity }}</p>
+          <p>Légnyomás: {{ searchResult.main.pressure }} <b>hPa</b></p>
+          <p>Páratartalom: {{ searchResult.main.humidity }} <b>%</b></p>
+          <p>
+            Szélsebesség: {{ searchResult.wind.speed }} <b>m/s</b>
+            {{ searchResult.wind.deg }}°
+          </p>
+          <p>Időpont: {{ currentDate() }}</p>
         </div>
       </div>
     </div>

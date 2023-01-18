@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
   private KELVIN_VALUE: number = 273.15;
   public searchTerm: string = '';
   public searchResults: any[];
+
   constructor(
     private weatherService: WeatherService,
     private toastr: ToastrService
@@ -21,7 +22,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  private notInList(cityName: string) {
+  private notInList(cityName: string): boolean {
     let result = this.searchResults.every((city) => city.name !== cityName);
     if (!result) {
       this.toastr.error(`${cityName} város már szerepel a listában!`);
@@ -30,9 +31,22 @@ export class MainComponent implements OnInit {
     return result;
   }
 
-  search() {
-    this.weatherService.getWeather(this.searchTerm + ',hu').subscribe(
-      (data) => {
+  public deleteCard(cardName: string): void {
+    this.searchResults = this.searchResults.filter(
+      (city) => city.name !== cardName
+    );
+    this.toastr.success(`${cardName} város törölve a listáról!`);
+  }
+
+  public currentDate(): string {
+    const date = new Date();
+    // Return date + time
+    return date.toLocaleString();
+  }
+
+  public search(): void {
+    this.weatherService.getWeather(this.searchTerm + ',hu').subscribe({
+      next: (data) => {
         if (this.notInList((data as any).name)) {
           this.searchResults.unshift(data);
           this.toastr.success(
@@ -42,21 +56,22 @@ export class MainComponent implements OnInit {
           this.searchTerm = '';
         }
       },
-      // error handling
-      () => {
-        this.toastr.error(
-          'Hiba történt!',
-          'Nem található a keresési feltételnek megfelelő város!'
-        );
-      }
-    );
+      error:
+        // error handling, we don't need parameter, assuming no city found
+        () => {
+          this.toastr.error(
+            'Hiba történt!',
+            'Nem található a keresési feltételnek megfelelő város!'
+          );
+        },
+    });
   }
 
-  kelvinToCelsius(kelvin: number) {
-    return (kelvin - this.KELVIN_VALUE).toFixed(2);
+  public kelvinToCelsius(kelvin: number): string {
+    return (kelvin - this.KELVIN_VALUE).toFixed(0);
   }
 
-  kelvinToFahrenheit(kelvin: number) {
-    return ((kelvin - this.KELVIN_VALUE) * 1.8 + 32).toFixed(2);
+  public kelvinToFahrenheit(kelvin: number): string {
+    return ((kelvin - this.KELVIN_VALUE) * 1.8 + 32).toFixed(0);
   }
 }
