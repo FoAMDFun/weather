@@ -21,46 +21,11 @@
 <!-- List of results -->
 <div class="container mb-5" *ngIf="searchResults">
   <div class="row pt-5">
-    <div
+    <app-card
+      *ngFor="let result of searchResults"
       class="col-xl-3 col-md-6 col-sm-12"
-      *ngFor="let searchResult of searchResults"
-    >
-      <div class="card mt-3">
-        <div class="card-header">
-          {{ searchResult.name }} időjárása:
-          <p class="close-button" (click)="deleteCard(searchResult.name)">X</p>
-        </div>
-        <div class="card-body">
-          <img
-            class="img-fluid"
-            src="{{
-              'https://openweathermap.org/img/wn/' +
-                searchResult.weather[0].icon +
-                '@2x.png'
-            }}"
-            alt="időjárás ikon"
-          />
-          <p class="temperature-celsius">
-            {{ kelvinToCelsius(searchResult.main.temp) }} <b>C</b>
-          </p>
-          <p class="temperature-fahrenheit">
-            {{ kelvinToFahrenheit(searchResult.main.temp) }} <b>F</b>
-          </p>
-          <p>Időjárás: {{ searchResult.weather[0].description }}</p>
-          <p>Légnyomás: {{ searchResult.main.pressure }} <b>hPa</b></p>
-          <p>Páratartalom: {{ searchResult.main.humidity }} <b>%</b></p>
-          <p>
-            Szél: {{ searchResult.wind.speed }} <b>m/s</b>
-            {{ searchResult.wind.deg }}°
-            <span
-              class="arrow"
-              [style.transform]="'rotate(' + searchResult.wind.deg + 'deg)'"
-              >&#8594;</span
-            >
-          </p>
-          <p>Időpont: {{ searchResult.currentDate }}</p>
-        </div>
-      </div>
-    </div>
+      [data]="result"
+      (deleteButtonClicked)="deleteCard(result.name)"
+    ></app-card>
   </div>
 </div>

@@ -10,9 +10,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
-  declarations: [AppComponent, MainComponent],
+  declarations: [AppComponent, MainComponent, CardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

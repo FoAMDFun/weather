@@ -9,7 +9,6 @@ import { WeatherService } from '../../services/weather.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  private KELVIN_VALUE: number = 273.15;
   public searchTerm: string = '';
   public searchResults: any[];
 
@@ -97,13 +96,5 @@ export class MainComponent implements OnInit {
           );
         },
     });
-  }
-
-  public kelvinToCelsius(kelvin: number): string {
-    return (kelvin - this.KELVIN_VALUE).toFixed(0);
-  }
-
-  public kelvinToFahrenheit(kelvin: number): string {
-    return ((kelvin - this.KELVIN_VALUE) * 1.8 + 32).toFixed(0);
   }
 }
