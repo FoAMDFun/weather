@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Weather } from '../../interfaces/weather';
 
 @Component({
   selector: 'app-card',
@@ -7,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   private KELVIN_VALUE: number = 273.15;
-  @Input() data: any;
+  @Input() data?: Weather;
   @Output() deleteButtonClicked = new EventEmitter<string>();
 
   constructor() {}

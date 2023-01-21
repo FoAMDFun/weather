@@ -1,4 +1,4 @@
-<div class="card mt-3">
+<div class="card mt-3" *ngIf="data && data.weather[0] && data.weather[0].icon">
   <div class="card-header">
     {{ data.name }} időjárása:
     <p class="close-button" (click)="deleteCard(data.name)">X</p>

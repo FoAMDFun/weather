@@ -1,6 +1,7 @@
 // Core
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Weather } from '../../interfaces/weather';
 import { WeatherService } from '../../services/weather.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { WeatherService } from '../../services/weather.service';
 })
 export class MainComponent implements OnInit {
   public searchTerm: string = '';
-  public searchResults: any[];
+  public searchResults: Weather[];
 
   constructor(
     private weatherService: WeatherService,
@@ -36,7 +37,7 @@ export class MainComponent implements OnInit {
       storageData.forEach((cityName: string) => {
         this.weatherService.getWeather(cityName).subscribe({
           next: (data) => {
-            (data as any).currentDate = this.currentDate();
+            data.currentDate = this.currentDate();
             this.searchResults.unshift(data);
           },
           error: () => {
@@ -75,12 +76,12 @@ export class MainComponent implements OnInit {
 
   public search(): void {
     this.weatherService.getWeather(this.searchTerm).subscribe({
-      next: (data) => {
-        if (this.notInList((data as any).name)) {
-          (data as any).currentDate = this.currentDate();
-          this.searchResults.unshift(data);
+      next: (city) => {
+        if (this.notInList(city.name)) {
+          city.currentDate = this.currentDate();
+          this.searchResults.unshift(city);
           this.toastr.success(
-            `${(data as any).name} város hozzáadva a listához`,
+            `${city.name} város hozzáadva a listához`,
             'Siker!'
           );
           this.searchTerm = '';
