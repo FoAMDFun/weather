@@ -20,7 +20,36 @@ export class MainComponent implements OnInit {
     this.searchResults = [];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadFromLocalStorage();
+  }
+
+  private saveToLocalStorage(): void {
+    localStorage.setItem(
+      'searchResults',
+      JSON.stringify(this.searchResults.map((item) => item.name))
+    );
+  }
+
+  public loadFromLocalStorage(): void {
+    const storageData = JSON.parse(localStorage.getItem('searchResults') || '');
+    if (storageData) {
+      storageData.forEach((cityName: string) => {
+        this.weatherService.getWeather(cityName).subscribe({
+          next: (data) => {
+            (data as any).currentDate = this.currentDate();
+            this.searchResults.unshift(data);
+          },
+          error: () => {
+            this.toastr.error(
+              'Nem található a keresési feltételnek megfelelő város!',
+              'Hiba történt!'
+            );
+          },
+        });
+      });
+    }
+  }
 
   private notInList(cityName: string): boolean {
     let result = this.searchResults.every((city) => city.name !== cityName);
@@ -36,6 +65,7 @@ export class MainComponent implements OnInit {
       (city) => city.name !== cardName
     );
     this.toastr.success(`${cardName} város törölve a listáról!`);
+    this.saveToLocalStorage();
   }
 
   public currentDate(): string {
@@ -55,6 +85,7 @@ export class MainComponent implements OnInit {
             'Siker!'
           );
           this.searchTerm = '';
+          this.saveToLocalStorage();
         }
       },
       error:
