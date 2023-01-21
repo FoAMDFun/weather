@@ -39,8 +39,12 @@ img {
   cursor: pointer;
 }
 
+.arrow {
+  display: inline-block;
+  filter: drop-shadow(5px 5px 5px #5f5f5f);
+}
 .close-button:hover {
-  background-color: #ff6666; /* Lighter red */
+  background-color: #ff6699;
 }
 
 .temperature-celsius {

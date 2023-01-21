@@ -19,7 +19,7 @@
   </div>
 </div>
 <!-- List of results -->
-<div class="container" *ngIf="searchResults">
+<div class="container mb-5" *ngIf="searchResults">
   <div class="row pt-5">
     <div
       class="col-xl-3 col-md-6 col-sm-12"
@@ -46,11 +46,17 @@
           <p class="temperature-fahrenheit">
             {{ kelvinToFahrenheit(searchResult.main.temp) }} <b>F</b>
           </p>
+          <p>Időjárás: {{ searchResult.weather[0].description }}</p>
           <p>Légnyomás: {{ searchResult.main.pressure }} <b>hPa</b></p>
           <p>Páratartalom: {{ searchResult.main.humidity }} <b>%</b></p>
           <p>
-            Szélsebesség: {{ searchResult.wind.speed }} <b>m/s</b>
+            Szél: {{ searchResult.wind.speed }} <b>m/s</b>
             {{ searchResult.wind.deg }}°
+            <span
+              class="arrow"
+              [style.transform]="'rotate(' + searchResult.wind.deg + 'deg)'"
+              >&#8594;</span
+            >
           </p>
           <p>Időpont: {{ searchResult.currentDate }}</p>
         </div>

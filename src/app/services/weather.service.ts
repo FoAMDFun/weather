@@ -17,7 +17,7 @@ export class WeatherService {
 
   getWeather(city: string) {
     // city: string = 'London,uk' 'Budapest,hu' 'New York,us'
-    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${this.API_KEY}`;
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=hu&APPID=${this.API_KEY}`;
 
     return this.httpClient.get(endpoint);
   }
