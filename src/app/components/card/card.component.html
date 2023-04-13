@@ -11,20 +11,14 @@
       }}"
       alt="időjárás ikon"
     />
-    <p class="temperature-celsius">
-      {{ kelvinToCelsius(data.main.temp) }} <b>C</b>
-    </p>
-    <p class="temperature-fahrenheit">
-      {{ kelvinToFahrenheit(data.main.temp) }} <b>F</b>
-    </p>
+    <p class="temperature-celsius">{{ kelvinToCelsius(data.main.temp) }} <b>C</b></p>
+    <p class="temperature-fahrenheit">{{ kelvinToFahrenheit(data.main.temp) }} <b>F</b></p>
     <p>Időjárás: {{ data.weather[0].description }}</p>
-    <p>Légnyomás: {{ data.main.pressure }} <b>hPa</b></p>
+    <p>Légnyomássssss: {{ data.main.pressure }} <b>hPa</b></p>
     <p>Páratartalom: {{ data.main.humidity }} <b>%</b></p>
     <p>
       Szél: {{ data.wind.speed }} <b>m/s</b> {{ data.wind.deg }}°
-      <span class="arrow" [style.transform]="'rotate(' + data.wind.deg + 'deg)'"
-        >&#8594;</span
-      >
+      <span class="arrow" [style.transform]="'rotate(' + data.wind.deg + 'deg)'">&#8594;</span>
     </p>
     <p>Időpont: {{ data.currentDate }}</p>
   </div>
